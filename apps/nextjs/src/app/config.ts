@@ -3,12 +3,18 @@ import { slate } from '@plone/blocks';
 import { blocksConfig } from '@plone/blocks';
 
 const settings = {
-  apiPath: process.env.NEXT_PUBLIC_VERCEL_URL
-    ? // Vercel does not prepend the schema to the NEXT_PUBLIC_VERCEL_URL automatic env var
-      `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:3000',
   slate,
 };
+
+if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+  if (process.env.NEXT_PUBLIC_IS_PRODUCTION) {
+    settings.apiPath = 'https://nextjs.sneridagh.dev/';
+  } else {
+    settings.apiPath = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+} else {
+  settings.apiPath = 'http://localhost:3000/';
+}
 
 // @ts-expect-error Improve typings
 config.set('settings', settings);
