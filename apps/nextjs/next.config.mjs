@@ -23,7 +23,11 @@ const nextConfig = {
     let apiServerURL, vhmRewriteRule;
     if (process.env.API_SERVER_URL) {
       apiServerURL = process.env.API_SERVER_URL;
-      vhmRewriteRule = `/VirtualHostBase/https/${process.env.NEXT_PUBLIC_VERCEL_URL}%3A443/Plone/%2B%2Bapi%2B%2B/VirtualHostRoot`;
+      vhmRewriteRule = `/VirtualHostBase/https/${
+        process.env.NEXT_PUBLIC_IS_PRODUCTION
+          ? 'nextjs.sneridagh.dev'
+          : process.env.NEXT_PUBLIC_VERCEL_URL
+      }%3A443/Plone/%2B%2Bapi%2B%2B/VirtualHostRoot`;
     } else if (
       process.env.API_SERVER_URL &&
       !process.env.NEXT_PUBLIC_VERCEL_URL
